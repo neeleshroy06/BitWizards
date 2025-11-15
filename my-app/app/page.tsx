@@ -15,7 +15,6 @@ export default function Home() {
         <h1 className={`font-bold text-3xl ${pixelFont.className}`}>
           BitsWizard
         </h1>
-        <SpriteDisplay />
         <Link href="/home">
           <Button>Join The Adventure</Button>
         </Link>

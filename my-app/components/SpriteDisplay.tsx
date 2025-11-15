@@ -58,10 +58,6 @@ export default function SpriteDisplay() {
     }
 
     initPixi();
-
-    return () => {
-      if (app) app.destroy(true);
-    };
   }, []);
 
   return <div ref={containerRef} />;
