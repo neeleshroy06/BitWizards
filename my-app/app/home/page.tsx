@@ -4,6 +4,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import BlocklyComponent from "../../components/BlocklyComponent";
 import GridComponent from "../../components/GridComponent";
 import { javascriptGenerator } from "blockly/javascript";
+import Sidebar, { SidebarItem } from "../../components/sidebar";
+import { Home, Settings, BookOpen } from "lucide-react";
 
 const HomePage = () => {
   const gridSize = 8;
@@ -86,37 +88,61 @@ const HomePage = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        padding: "20px",
-        alignItems: "flex-start",
-        overflowX: "hidden",
-      }}
-    >
-      <div style={{ flex: 1, paddingTop: "50px", paddingLeft: "50px" }}>
-        <BlocklyComponent />
-        <button
-          onClick={runCode}
-          style={{
-            marginTop: "10px",
-            padding: "10px 20px",
-            backgroundColor: "green",
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-          }}
-        >
-          Run Code
-        </button>
-      </div>
-      <div style={{ flex: 1, paddingTop: "50px", paddingLeft: "85px" }}>
-        <GridComponent
-          gridSize={gridSize}
-          characterPosition={characterPosition}
-          characterDirection={characterDirection}
+    <div className="flex h-screen w-screen overflow-hidden">
+      <Sidebar>
+        <SidebarItem 
+          icon={<Home size={20} />} 
+          text="Home" 
+          href="/home"
         />
+        <SidebarItem 
+          icon={<BookOpen size={20} />} 
+          text="Course Progress" 
+          subItems={[
+            { text: "loops", href: "/course/loops" },
+            { text: "logic", href: "/course/logic" },
+            { text: "sorting", href: "/course/sorting" },
+            { text: "custom", href: "/course/custom" }
+          ]}
+        />
+        <SidebarItem 
+          icon={<Settings size={20} />} 
+          text="Settings" 
+          href="/settings"
+        />
+      </Sidebar>
+      <div
+        className="flex-1 flex"
+        style={{
+          padding: "20px",
+          alignItems: "flex-start",
+          overflowX: "hidden",
+        }}
+      >
+        <div style={{ flex: 1, paddingTop: "50px", paddingLeft: "50px" }}>
+          <BlocklyComponent />
+          <button
+            onClick={runCode}
+            style={{
+              marginTop: "10px",
+              padding: "10px 20px",
+              backgroundColor: "green",
+              color: "white",
+              border: "none",
+              borderRadius: "8px",
+              cursor: "pointer",
+            }}
+          >
+            Run Code
+          </button>
+        </div>
+        <div style={{ flex: 1, paddingTop: "50px", paddingLeft: "85px" }}>
+          <GridComponent
+            gridSize={gridSize}
+            characterPosition={characterPosition}
+            characterDirection={characterDirection}
+          />
+        </div>
       </div>
     </div>
   );
