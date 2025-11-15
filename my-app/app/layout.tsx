@@ -28,8 +28,8 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
-        <body className={`${roboto.className} antialiased`}>{children}</body>
+      <html lang="en" suppressHydrationWarning className="h-full overflow-hidden">
+        <body className={`${roboto.className} antialiased h-full overflow-hidden`}>{children}</body>
         <Toaster />
       </html>
     </ClerkProvider>
