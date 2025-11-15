@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import SpriteDisplay from "./SpriteDisplay";
 
 interface GridProps {
   gridSize: number;
