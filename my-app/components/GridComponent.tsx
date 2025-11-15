@@ -8,7 +8,11 @@ interface GridProps {
   characterDirection: string;
 }
 
+const TOTAL_GRID_DIMENSION = 600; // Total size of the grid in pixels
+
 const GridComponent: React.FC<GridProps> = ({ gridSize, characterPosition, characterDirection }) => {
+  const tileSize = TOTAL_GRID_DIMENSION / gridSize;
+
   const renderGrid = () => {
     const cells = [];
     for (let y = 0; y < gridSize; y++) {
@@ -18,8 +22,8 @@ const GridComponent: React.FC<GridProps> = ({ gridSize, characterPosition, chara
           <div
             key={`${x}-${y}`}
             style={{
-              width: '40px',
-              height: '40px',
+              width: `${tileSize}px`,
+              height: `${tileSize}px`,
               border: '1px solid #ccc',
               display: 'flex',
               justifyContent: 'center',
@@ -38,9 +42,10 @@ const GridComponent: React.FC<GridProps> = ({ gridSize, characterPosition, chara
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: `repeat(${gridSize}, 40px)`,
+        gridTemplateColumns: `repeat(${gridSize}, ${tileSize}px)`,
         border: '1px solid #000',
-        width: 'fit-content',
+        width: `${TOTAL_GRID_DIMENSION}px`,
+        height: `${TOTAL_GRID_DIMENSION}px`,
       }}
     >
       {renderGrid()}
