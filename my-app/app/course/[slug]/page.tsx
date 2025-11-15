@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
 export default function Page() {
-  const { slug } = useParams<{ slug: string }>(); // <-- FIX
+  const { slug } = useParams<{ slug: string }>();
   console.log(slug);
 
   const [title, setTitle] = useState("");
