@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Press_Start_2P } from "next/font/google";
 import Link from "next/link";
+import SpriteDisplay from "@/components/SpriteDisplay";
 
 const pixelFont = Press_Start_2P({
   subsets: ["latin"],
@@ -14,6 +15,7 @@ export default function Home() {
         <h1 className={`font-bold text-3xl ${pixelFont.className}`}>
           BitsWizard
         </h1>
+        <SpriteDisplay />
         <Link href="/home">
           <Button>Join The Adventure</Button>
         </Link>
