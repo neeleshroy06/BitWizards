@@ -16,13 +16,23 @@ export default function Home() {
         <Image
           src={Logo}
           alt="BitsWizard Logo"
-          className="w-70 m-0 h-70 absolute top-25"
+          className="w-70 m-0 h-70 absolute top-20"
         />
         <h1 className={`font-bold text-3xl ${pixelFont.className} text-white`}>
           BitsWizard
         </h1>
+        <p
+          className={`font-bold text-xl text-amber-400 ${pixelFont.className} `}
+        >
+          Learn the magic of CS!
+        </p>
         <Link href="/home">
-          <Button variant="secondary">Join The Adventure</Button>
+          <Button
+            className={`font-bold text-l ${pixelFont.className}`}
+            variant="secondary"
+          >
+            Join The Adventure
+          </Button>
         </Link>
       </div>
     </div>
