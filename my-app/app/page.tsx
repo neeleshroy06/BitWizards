@@ -15,7 +15,6 @@ export default function Home() {
           BitsWizard
         </h1>
         <Link href="/home">
-          {" "}
           <Button>Join The Adventure</Button>
         </Link>
       </div>
