@@ -6,7 +6,7 @@ import GridComponent from '../../components/GridComponent';
 import { javascriptGenerator } from 'blockly/javascript';
 
 const HomePage = () => {
-  const gridSize = 5;
+  const gridSize = 8;
   const [characterPosition, setCharacterPosition] = useState({ x: 0, y: 0 });
   const [characterDirection, setCharacterDirection] = useState('north');
 
@@ -84,13 +84,13 @@ const HomePage = () => {
 
   return (
     <div style={{ display: 'flex', padding: '20px' }}>
-      <div style={{ flex: 1, marginRight: '20px' }}>
+      <div style={{ flex: 1, transform: 'translateX(50px) translateY(100px)' }}>
         <BlocklyComponent />
-        <button onClick={runCode} style={{ marginTop: '10px', padding: '10px 20px' }}>
+        <button onClick={runCode} style={{ marginTop: '10px', padding: '10px 20px', backgroundColor: 'green', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>
           Run Code
         </button>
       </div>
-      <div style={{ flex: 1 }}>
+      <div style={{ flex: 1, transform: 'translateX(85px) translateY(50px)' }}>
         <GridComponent
           gridSize={gridSize}
           characterPosition={characterPosition}
