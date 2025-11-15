@@ -9,6 +9,14 @@ import { javascriptGenerator } from 'blockly/javascript';
 // Define custom blocks
 const customBlocks = [
   {
+    "type": "start_block",
+    "message0": "when game starts",
+    "nextStatement": null,
+    "colour": 120,
+    "tooltip": "The starting point for your code.",
+    "helpUrl": ""
+  },
+  {
     "type": "move_forward",
     "message0": "move forward",
     "previousStatement": null,
@@ -38,6 +46,10 @@ const customBlocks = [
 ];
 
 // Define code generation for custom blocks
+javascriptGenerator.forBlock['start_block'] = function(block) {
+  return ''; // No code for the start block itself
+};
+
 javascriptGenerator.forBlock['move_forward'] = function(block) {
   return 'window.api.moveForward();\n';
 };
@@ -64,6 +76,10 @@ const BlocklyComponent = () => {
           "contents": [
             {
               "kind": "block",
+              "type": "start_block"
+            },
+            {
+              "kind": "block",
               "type": "move_forward"
             },
             {
@@ -86,3 +102,4 @@ const BlocklyComponent = () => {
 };
 
 export default BlocklyComponent;
+
