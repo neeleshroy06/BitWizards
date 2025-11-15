@@ -10,7 +10,7 @@ import { javascriptGenerator } from 'blockly/javascript';
 const customBlocks = [
   {
     "type": "start_block",
-    "message0": "when game starts",
+    "message0": "start",
     "nextStatement": null,
     "colour": 120,
     "tooltip": "The starting point for your code.",
@@ -67,10 +67,11 @@ const BlocklyComponent = () => {
   const toolbox = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let workspace: Blockly.WorkspaceSvg | null = null;
     if (blocklyDiv.current) {
       Blockly.defineBlocksWithJsonArray(customBlocks);
 
-      const workspace = Blockly.inject(blocklyDiv.current, {
+      workspace = Blockly.inject(blocklyDiv.current, {
         toolbox: {
           "kind": "flyoutToolbox",
           "contents": [
@@ -95,6 +96,12 @@ const BlocklyComponent = () => {
       });
 
       (window as any).workspace = workspace;
+    }
+
+    return () => {
+      if (workspace) {
+        workspace.dispose();
+      }
     }
   }, []);
 
