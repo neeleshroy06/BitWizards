@@ -7,6 +7,7 @@ import { useClerk, useUser } from "@clerk/nextjs"
 
 interface SidebarContextType {
   expanded: boolean
+  setExpanded: (expanded: boolean) => void
 }
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined)
@@ -16,7 +17,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ children }: SidebarProps) {
-  const [expanded, setExpanded] = useState(true)
+  const [expanded, setExpanded] = useState(false)
   const [accountExpanded, setAccountExpanded] = useState(false)
   const accountRef = useRef<HTMLDivElement>(null)
   const { user } = useUser()
@@ -60,14 +61,25 @@ export default function Sidebar({ children }: SidebarProps) {
           </button>
         </div>
 
-        <SidebarContext.Provider value={{ expanded }}>
+        <SidebarContext.Provider value={{ expanded, setExpanded }}>
           <ul className="flex-1 px-3 overflow-y-auto overflow-x-hidden">{children}</ul>
         </SidebarContext.Provider>
 
         <div className="border-t relative" ref={accountRef}>
           <div 
             className="flex p-3 cursor-pointer hover:bg-gray-50 transition-colors"
-            onClick={() => setAccountExpanded(!accountExpanded)}
+            onClick={() => {
+              // If sidebar is collapsed, expand it first
+              if (!expanded) {
+                setExpanded(true)
+                // Wait for sidebar to expand before showing account menu
+                setTimeout(() => {
+                  setAccountExpanded(true)
+                }, 100)
+              } else {
+                setAccountExpanded(!accountExpanded)
+              }
+            }}
           >
             <img
               src={profileImageUrl}
@@ -92,11 +104,6 @@ export default function Sidebar({ children }: SidebarProps) {
           
           {accountExpanded && expanded && (
             <div className="absolute bottom-full left-0 right-0 mb-2 bg-white border rounded-lg shadow-lg py-2 z-50">
-              <AccountMenuItem 
-                icon={<User size={16} />} 
-                text="My Profile" 
-                href="/profile"
-              />
               <SignOutMenuItem 
                 icon={<LogOut size={16} />} 
                 text="Sign Out"
@@ -121,6 +128,7 @@ interface SidebarItemProps {
 export function SidebarItem({ icon, text, active, alert, href, subItems }: SidebarItemProps) {
   const context = useContext(SidebarContext)
   const expanded = context?.expanded ?? false
+  const setExpanded = context?.setExpanded ?? (() => {})
   const router = useRouter()
   const pathname = usePathname()
   const [isExpanded, setIsExpanded] = useState(false)
@@ -130,7 +138,16 @@ export function SidebarItem({ icon, text, active, alert, href, subItems }: Sideb
   
   const handleClick = () => {
     if (hasSubItems) {
-      setIsExpanded(!isExpanded)
+      // If sidebar is collapsed, expand it first, then show sub-items
+      if (!expanded) {
+        setExpanded(true)
+        // Use setTimeout to ensure sidebar expands before showing sub-items
+        setTimeout(() => {
+          setIsExpanded(true)
+        }, 100)
+      } else {
+        setIsExpanded(!isExpanded)
+      }
     } else if (href) {
       router.push(href)
     }
@@ -151,7 +168,9 @@ export function SidebarItem({ icon, text, active, alert, href, subItems }: Sideb
           }
       `}
       >
-        {icon}
+        <div className="flex-shrink-0">
+          {icon}
+        </div>
         <span
           className={`overflow-hidden transition-all flex-1 ${
             expanded ? "w-52 ml-3" : "w-0"
@@ -269,7 +288,7 @@ function SignOutMenuItem({ icon, text }: SignOutMenuItemProps) {
       className={`
         flex items-center py-2 px-3 rounded-md cursor-pointer
         transition-colors text-sm
-        hover:bg-indigo-50 text-gray-600
+        hover:bg-red-50 text-red-600
       `}
     >
       {icon}
