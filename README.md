@@ -1,2 +1,2 @@
-# BitWizards_CutieHack2025
+# BitWizards
 Cutie Hack 2025 Project
