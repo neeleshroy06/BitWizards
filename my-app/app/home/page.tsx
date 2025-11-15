@@ -8,7 +8,7 @@ import { javascriptGenerator } from 'blockly/javascript';
 const HomePage = () => {
   const gridSize = 8;
   const [characterPosition, setCharacterPosition] = useState({ x: 0, y: 0 });
-  const [characterDirection, setCharacterDirection] = useState('north');
+  const [characterDirection, setCharacterDirection] = useState('east');
 
   const moveForward = useCallback(() => {
     setCharacterPosition(prev => {
@@ -74,6 +74,9 @@ const HomePage = () => {
   }, [moveForward, turnLeft, turnRight]);
 
   const runCode = () => {
+    if (typeof window !== 'undefined' && (window as any).loopTrap) {
+      (window as any).loopTrap.iterations = 1000;
+    }
     const code = javascriptGenerator.workspaceToCode((window as any).workspace);
     try {
       eval(code);
@@ -83,14 +86,14 @@ const HomePage = () => {
   };
 
   return (
-    <div style={{ display: 'flex', padding: '20px' }}>
-      <div style={{ flex: 1, transform: 'translateX(50px) translateY(100px)' }}>
+    <div style={{ display: 'flex', padding: '20px', alignItems: 'flex-start', overflowX: 'hidden' }}>
+      <div style={{ flex: 1, paddingTop: '50px', paddingLeft: '50px' }}>
         <BlocklyComponent />
         <button onClick={runCode} style={{ marginTop: '10px', padding: '10px 20px', backgroundColor: 'green', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>
           Run Code
         </button>
       </div>
-      <div style={{ flex: 1, transform: 'translateX(85px) translateY(50px)' }}>
+      <div style={{ flex: 1, paddingTop: '50px', paddingLeft: '85px' }}>
         <GridComponent
           gridSize={gridSize}
           characterPosition={characterPosition}
