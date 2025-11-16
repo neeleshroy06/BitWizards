@@ -21,7 +21,7 @@ export const chapters: { [key: string]: Chapter } = {
         obstacles: [
           { x: 1, y: 1 },
           { x: 2, y: 3 },
-          { x: 3, y: 2 },
+          { x: 2, y: 2 },
         ],
         rewardPosition: { x: 3, y: 3 },
         startPosition: { x: 0, y: 0 }
@@ -78,7 +78,7 @@ export const chapters: { [key: string]: Chapter } = {
           { x: 4, y: 1 },
           { x: 3, y: 3 },
         ],
-        rewardPosition: { x: 7, y: 7 },
+        rewardPosition: { x: 5, y: 4 },
         startPosition: { x: 0, y: 0 },
       },
       {
@@ -105,15 +105,31 @@ export const chapters: { [key: string]: Chapter } = {
     name: "Data Structures",
     levels: [
       {
-        gridSize: 8,
+        gridSize: 4,
         obstacles: [
           { x: 0, y: 3 },
-          { x: 1, y: 5 },
-          { x: 2, y: 2 },
-          { x: 4, y: 6 },
-          { x: 6, y: 4 },
+          { x: 1, y: 2},
+          { x: 0, y: 1 },
+
         ],
-        rewardPosition: { x: 7, y: 1 },
+        rewardPosition: { x: 3, y: 1 },
+        stackPosition: { x: 1, y: 0 },
+        initialStackHeight: 2,
+        startPosition: { x: 0, y: 0 },
+      },
+      {
+        gridSize: 6,
+        obstacles: [
+          { x: 0, y: 0 },
+          { x: 1, y: 1 },
+          { x: 2, y: 2 },
+          { x: 3, y: 3 },
+          { x: 4, y: 4 },
+          { x: 5, y: 4 }, 
+        ],
+        stackPosition: { x: 4, y: 5 },
+        initialStackHeight: 3,
+        rewardPosition: { x: 5, y: 5 },
         startPosition: { x: 0, y: 0 },
       },
       {
@@ -122,10 +138,14 @@ export const chapters: { [key: string]: Chapter } = {
           { x: 0, y: 0 },
           { x: 1, y: 1 },
           { x: 2, y: 2 },
-          { x: 3, y: 3 },
+          { x: 3, y: 4 },
+          { x: 4, y: 3 },
+          { x: 5, y: 1 }, 
         ],
-        rewardPosition: { x: 5, y: 5 },
-        startPosition: { x: 0, y: 7 },
+        stackPosition: { x: 2, y: 5 },
+        initialStackHeight: 4,
+        rewardPosition: { x: 2, y: 6 },
+        startPosition: { x: 0, y: 0 },
       },
     ],
   },
