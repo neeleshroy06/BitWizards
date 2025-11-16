@@ -13,6 +13,7 @@ interface GridProps {
   rewardPosition: { x: number; y: number };
   stackPosition?: { x: number; y: number };
   stackHeight?: number;
+  rewardImage?: string; // New prop for custom reward image
 }
 
 const TOTAL_GRID_DIMENSION = 570; // Total size of the grid in pixels
@@ -24,6 +25,7 @@ const GridComponent: React.FC<GridProps> = ({
   rewardPosition,
   stackPosition,
   stackHeight,
+  rewardImage, // Destructure new prop
 }) => {
   const tileSize = TOTAL_GRID_DIMENSION / gridSize;
 
@@ -53,7 +55,7 @@ const GridComponent: React.FC<GridProps> = ({
         } else if (isCharacterHere) {
           cellContent = <Character />;
         } else if (isReward(x, y)) {
-          cellContent = <Reward />;
+          cellContent = <Reward imageSrc={rewardImage} />; // Pass rewardImage to Reward component
         } else if (isObstacle(x, y)) {
           cellContent = <Obstacle />;
         }
@@ -102,10 +104,15 @@ const Character = () => {
   );
 };
 
-const Reward = () => {
+interface RewardProps {
+  imageSrc?: string;
+}
+
+const Reward: React.FC<RewardProps> = ({ imageSrc }) => {
+  const src = imageSrc || RewardImg; // Use custom image if provided, else default
   return (
     <div>
-      <Image src={RewardImg} alt="Reward" />
+      <Image src={src} alt="Reward" width={50} height={50} />
     </div>
   );
 };

@@ -5,6 +5,7 @@ export interface LevelConfig {
   startPosition: { x: number; y: number };
   stackPosition?: { x: number; y: number }; // Optional stack position
   initialStackHeight?: number; // Optional initial stack height (1-4)
+  rewardImage?: string; // Optional custom reward image path
 }
 
 export interface Chapter {
@@ -120,7 +121,6 @@ export const chapters: { [key: string]: Chapter } = {
       {
         gridSize: 6,
         obstacles: [
-          { x: 0, y: 0 },
           { x: 1, y: 1 },
           { x: 2, y: 2 },
           { x: 3, y: 3 },
@@ -131,6 +131,7 @@ export const chapters: { [key: string]: Chapter } = {
         initialStackHeight: 3,
         rewardPosition: { x: 5, y: 5 },
         startPosition: { x: 0, y: 0 },
+        rewardImage: "/assets/treasure.png", // Custom reward image for this level
       },
       {
         gridSize: 8,

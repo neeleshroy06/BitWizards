@@ -276,6 +276,7 @@ export default function Workspace({ levelConfig, onLevelComplete }: WorkspacePro
           rewardPosition={currentLevel.rewardPosition}
           stackPosition={currentLevel.stackPosition}
           stackHeight={stackHeight}
+          rewardImage={currentLevel.rewardImage}
         />
       </div>
     </div>
