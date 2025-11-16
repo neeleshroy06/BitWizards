@@ -1,33 +1,12 @@
 "use client";
 
-import Sidebar, { SidebarItem } from '../../components/sidebar';
+import SidebarGlobal from "@/components/SidebarGlobal";
 import { Home, Settings, BookOpen } from 'lucide-react';
 
 export default function SettingsPage() {
   return (
     <div className="flex h-screen w-screen overflow-hidden">
-      <Sidebar>
-        <SidebarItem 
-          icon={<Home size={20} />} 
-          text="Home" 
-          href="/home"
-        />
-        <SidebarItem 
-          icon={<BookOpen size={20} />} 
-          text="Course Progress" 
-          subItems={[
-            { text: "loops", href: "/course/loops" },
-            { text: "logic", href: "/course/logic" },
-            { text: "sorting", href: "/course/sorting" },
-            { text: "movement", href: "/course/movement" }
-          ]}
-        />
-        <SidebarItem 
-          icon={<Settings size={20} />} 
-          text="Settings" 
-          href="/settings"
-        />
-      </Sidebar>
+      <SidebarGlobal />
       <div className="flex-1 p-8 overflow-auto">
         <h1 className="text-3xl font-bold mb-6">Settings</h1>
         <div className="space-y-4">
