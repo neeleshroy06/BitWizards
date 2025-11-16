@@ -189,6 +189,26 @@ const customBlocks = [
     helpUrl: "",
   },
   {
+    type: "check_direction",
+    message0: "is anything %1",
+    args0: [
+      {
+        type: "field_dropdown",
+        name: "DIRECTION",
+        options: [
+          ["up", "up"],
+          ["down", "down"],
+          ["left", "left"],
+          ["right", "right"],
+        ],
+      },
+    ],
+    output: "Boolean",
+    colour: 210, // Same color as other logic blocks
+    tooltip: "Checks if there is an obstacle, stack, or reward in the specified direction.",
+    helpUrl: "",
+  },
+  {
     type: "simple_if",
     message0: "if %1 then",
     args0: [
@@ -260,6 +280,11 @@ javascriptGenerator.forBlock["pop_stack"] = function (block) {
   return `yield window.api.popStack('${direction}');\n`;
 };
 
+javascriptGenerator.forBlock["check_direction"] = function (block) {
+  const direction = block.getFieldValue("DIRECTION");
+  const code = `yield window.api.checkDirection('${direction}')`;
+  return [code, Order.ATOMIC];
+};
 
 
 javascriptGenerator.forBlock["simple_if"] = function (block) {
@@ -270,7 +295,8 @@ javascriptGenerator.forBlock["simple_if"] = function (block) {
       Order.ATOMIC,
     ) || "false";
   const branch = javascriptGenerator.statementToCode(block, "DO");
-  const code = `if (${condition}) {\n${branch}}\n`;
+  // Generate code that yields the condition and then uses its resolved value
+  const code = `const conditionResult = yield ${condition};\nif (conditionResult) {\n${branch}}\n`;
   return code;
 };
 
@@ -367,6 +393,7 @@ const BlocklyComponent = () => {
                 { kind: "block", type: "logic_operation" },
                 { kind: "block", type: "logic_negate" },
                 { kind: "block", type: "logic_boolean" },
+                { kind: "block", type: "check_direction" }, // Added check_direction
               ],
             },
             {
