@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import * as Blockly from "blockly/core";
 import "blockly/blocks";
 import "blockly/javascript";
-import { javascriptGenerator } from "blockly/javascript";
+import { javascriptGenerator, Order } from "blockly/javascript";
 import { toast } from "sonner";
 
 // Infinite loop protection
@@ -241,7 +241,7 @@ javascriptGenerator.forBlock["simple_if"] = function (block) {
     javascriptGenerator.valueToCode(
       block,
       "CONDITION",
-      javascriptGenerator.ORDER_ATOMIC,
+      Order.ATOMIC,
     ) || "false";
   const branch = javascriptGenerator.statementToCode(block, "DO");
   const code = `if (${condition}) {\n${branch}}\n`;
