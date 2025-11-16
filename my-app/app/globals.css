@@ -132,3 +132,6 @@
 .blocklyScrollbarHandle {
   display: none;
 }
+.blocklyFlyout {
+  display: block !important;
+}
