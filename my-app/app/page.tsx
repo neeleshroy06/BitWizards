@@ -15,11 +15,11 @@ export default function Home() {
       <div className="text-center space-y-4 flex items-center flex-col">
         <Image
           src={Logo}
-          alt="BitsWizard Logo"
-          className="w-70 m-0 h-70 absolute top-20"
+          alt="BitWizards Logo"
+          className="w-60 m-0 h-60 mb-5"
         />
         <h1 className={`font-bold text-3xl ${pixelFont.className} text-white`}>
-          BitsWizard
+          BitWizards
         </h1>
         <p
           className={`font-bold text-xl text-amber-400 ${pixelFont.className} `}
