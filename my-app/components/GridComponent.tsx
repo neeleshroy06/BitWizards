@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
+import Wizard from "@/public/assets/wizard-l.png";
 
 interface GridProps {
   gridSize: number;
@@ -78,7 +80,11 @@ const Character = ({ direction }: { direction: string }) => {
     }
   };
 
-  return <div style={{ transform: `rotate(${getRotation()})` }}>▲ </div>;
+  return (
+    <div style={{ transform: `rotate(${getRotation()})` }}>
+      <Image src={Wizard} alt="Wizard" />{" "}
+    </div>
+  );
 };
 
 export default GridComponent;
