@@ -141,6 +141,63 @@ export default function Workspace({ levelConfig, onLevelComplete }: WorkspacePro
   const moveLeft = useCallback(() => move(-1, 0), [move]);
   const moveRight = useCallback(() => move(1, 0), [move]);
 
+  const checkDirection = useCallback(
+    async (direction: "up" | "down" | "left" | "right"): Promise<boolean> => {
+      let targetX = characterPosition.x;
+      let targetY = characterPosition.y;
+
+      switch (direction) {
+        case "up":
+          targetY -= 1;
+          break;
+        case "down":
+          targetY += 1;
+          break;
+        case "left":
+          targetX -= 1;
+          break;
+        case "right":
+          targetX += 1;
+          break;
+      }
+
+      // Check grid boundaries
+      if (
+        targetX < 0 ||
+        targetX >= currentLevel.gridSize ||
+        targetY < 0 ||
+        targetY >= currentLevel.gridSize
+      ) {
+        return false; // Out of bounds
+      }
+
+      // Check for obstacles
+      if (isObstacle(targetX, targetY)) {
+        return true;
+      }
+
+      // Check for reward
+      if (
+        targetX === currentLevel.rewardPosition.x &&
+        targetY === currentLevel.rewardPosition.y
+      ) {
+        return true;
+      }
+
+      // Check for stack (even if height is 0, it's still "something" there if we want to check for its presence)
+      if (
+        currentLevel.stackPosition &&
+        targetX === currentLevel.stackPosition.x &&
+        targetY === currentLevel.stackPosition.y
+      ) {
+        return true;
+      }
+
+      return false;
+    },
+    [characterPosition, currentLevel, isObstacle],
+  );
+
   useEffect(() => {
     (window as any).api = {
       moveUp,
@@ -148,8 +205,9 @@ export default function Workspace({ levelConfig, onLevelComplete }: WorkspacePro
       moveLeft,
       moveRight,
       popStack,
+      checkDirection,
     };
-  }, [moveUp, moveDown, moveLeft, moveRight, popStack]);
+  }, [moveUp, moveDown, moveLeft, moveRight, popStack, checkDirection]);
 
   const runCode = () => {
     if (typeof window !== "undefined" && (window as any).loopTrap) {
@@ -165,13 +223,13 @@ export default function Workspace({ levelConfig, onLevelComplete }: WorkspacePro
       ).constructor;
       const generator = new GeneratorFunction(code)();
 
-      const runGenerator = (gen: Generator) => {
-        const { value, done } = gen.next();
+      const runGenerator = (gen: Generator, yieldValue?: any) => {
+        const { value, done } = gen.next(yieldValue); // Pass the resolved value back
         if (done) {
           return;
         }
-        Promise.resolve(value).then(() => {
-          runGenerator(gen);
+        Promise.resolve(value).then((resolvedValue) => {
+          runGenerator(gen, resolvedValue); // Pass the resolved value to the next iteration
         });
       };
 

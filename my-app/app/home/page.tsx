@@ -13,7 +13,10 @@ const HomePage = () => {
         <Workspace />
         <div className="p-4 border-t">
           <h1 className="font-bold">Playground Mode</h1>
-          <p>Welcome to the playground! Mix and match different blocks.</p>
+          <p>
+            Welcome to the playground! Mix and match different blocks and reach
+            the potion.
+          </p>
         </div>
       </div>
     </div>

@@ -11,8 +11,7 @@ export default function SidebarGlobal() {
         subItems={[
           { text: "Arithmetic", href: "/chapters/arithmetic" },
           { text: "Conditionals", href: "/chapters/conditionals" },
-          { text: "Loops", href: "/chapters/loops" },
-          { text: "Sorts", href: "/chapters/sorts" },
+          { text: "Data Structures", href: "/chapters/loops" },
         ]}
       />
       <SidebarItem
