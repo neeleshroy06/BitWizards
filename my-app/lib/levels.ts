@@ -17,15 +17,24 @@ export const chapters: { [key: string]: Chapter } = {
     name: "Arithmetic",
     levels: [
       {
-        gridSize: 8,
+        gridSize: 4,
+        obstacles: [
+          { x: 1, y: 1 },
+          { x: 2, y: 3 },
+          { x: 3, y: 2 },
+        ],
+        rewardPosition: { x: 3, y: 3 },
+        startPosition: { x: 0, y: 0 }
+      },
+      {
+        gridSize: 6,
         obstacles: [
           { x: 1, y: 1 },
           { x: 2, y: 3 },
           { x: 4, y: 2 },
           { x: 5, y: 5 },
-          { x: 6, y: 1 },
         ],
-        rewardPosition: { x: 3, y: 3 },
+        rewardPosition: { x: 4, y: 3 },
         startPosition: { x: 0, y: 0 }
       },
       {
@@ -69,8 +78,26 @@ export const chapters: { [key: string]: Chapter } = {
           { x: 4, y: 1 },
           { x: 3, y: 3 },
         ],
-        rewardPosition: { x: 0, y: 0 },
-        startPosition: { x: 5, y: 5 },
+        rewardPosition: { x: 7, y: 7 },
+        startPosition: { x: 0, y: 0 },
+      },
+      {
+        gridSize: 8,
+        obstacles: [
+          { x: 1, y: 2 },
+          { x: 2, y: 4 },
+          { x: 3, y: 1 },
+          { x: 5, y: 6 },
+          { x: 7, y: 3 },
+          { x: 7, y: 6 },
+          { x: 6, y: 4 },
+          { x: 4, y: 2 },
+          { x: 2, y: 0 },
+        ],
+        rewardPosition: { x: 7, y: 3 },
+        startPosition: { x: 0, y: 0 },        
+        stackPosition: { x: 5, y: 4 },
+        initialStackHeight: 4,
       },
     ],
   },
