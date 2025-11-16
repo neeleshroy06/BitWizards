@@ -96,8 +96,11 @@ export default function Workspace() {
         <button
           onClick={runCode}
           style={{
+            position: "absolute",
+            transform: "translateY(-55px)",
+            zIndex: 999,
             marginTop: "10px",
-            padding: "10px 20px",
+            padding: "10px 8px",
             backgroundColor: "green",
             color: "white",
             border: "none",

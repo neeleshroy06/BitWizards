@@ -37,9 +37,9 @@ export default function Page() {
       <div>
         <SidebarGlobal />
       </div>
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1  flex flex-col">
         <Workspace />
-        <div className="border-t">
+        <div className="p-10 border-t">
           <p>Welcome traveler!</p>
         </div>
       </div>
