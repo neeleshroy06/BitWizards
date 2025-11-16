@@ -2,9 +2,9 @@
 
 import React from "react";
 import Image from "next/image";
-import Wizard from "@/public/assets/wizard-l.png";
 import ObstacleImg from "@/public/assets/obstacle.png";
 import RewardImg from "@/public/assets/reward.png";
+import WizardR from "@/public/assets/wizard-r.png";
 
 interface GridProps {
   gridSize: number;
@@ -86,7 +86,7 @@ const GridComponent: React.FC<GridProps> = ({
 const Character = () => {
   return (
     <div>
-      <Image src={Wizard} alt="Wizard" />{" "}
+      <Image src={WizardR} alt="Wizard" />{" "}
     </div>
   );
 };
