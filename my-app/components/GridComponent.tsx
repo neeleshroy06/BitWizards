@@ -10,7 +10,7 @@ interface GridProps {
   characterDirection: string;
 }
 
-const TOTAL_GRID_DIMENSION = 600; // Total size of the grid in pixels
+const TOTAL_GRID_DIMENSION = 570; // Total size of the grid in pixels
 
 const GridComponent: React.FC<GridProps> = ({
   gridSize,

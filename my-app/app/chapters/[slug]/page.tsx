@@ -39,7 +39,7 @@ export default function Page() {
       </div>
       <div className="flex-1  flex flex-col">
         <Workspace />
-        <div className="p-10 border-t">
+        <div className="p-7 border-t">
           <p>Welcome traveler!</p>
         </div>
       </div>

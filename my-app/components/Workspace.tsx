@@ -86,12 +86,12 @@ export default function Workspace() {
     <div
       className="flex-1 flex"
       style={{
-        padding: "20px",
+        padding: "10px",
         alignItems: "flex-start",
         overflowX: "hidden",
       }}
     >
-      <div style={{ flex: 1, paddingLeft: "50px" }}>
+      <div style={{ flex: 1, paddingLeft: "20px" }}>
         <BlocklyComponent />
         <button
           onClick={runCode}
@@ -111,7 +111,7 @@ export default function Workspace() {
           Run Code
         </button>
       </div>
-      <div style={{ flex: 1, paddingLeft: "85px" }}>
+      <div style={{ flex: 1, paddingLeft: "20px" }}>
         <GridComponent
           gridSize={gridSize}
           characterPosition={characterPosition}

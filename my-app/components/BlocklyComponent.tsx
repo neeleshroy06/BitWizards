@@ -311,7 +311,7 @@ const BlocklyComponent = () => {
     };
   }, []);
 
-  return <div ref={blocklyDiv} style={{ height: "600px", width: "100%" }} />;
+  return <div ref={blocklyDiv} style={{ height: "570px", width: "100%" }} />;
 };
 
 export default BlocklyComponent;
