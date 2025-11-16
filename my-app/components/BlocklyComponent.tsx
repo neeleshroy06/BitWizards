@@ -398,12 +398,12 @@ const BlocklyComponent = () => {
             },
             {
               kind: "category",
-              name: "Structure", // New category
+              name: "Data Structures", // New category
               contents: [{ kind: "block", type: "pop_stack" }],
             },
             {
               kind: "category",
-              name: "Data Structures",
+              name: "Loops",
               contents: [{ kind: "block", type: "controls_whileUntil" }],
             },
             {
