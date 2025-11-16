@@ -7,7 +7,6 @@ import Wizard from "@/public/assets/wizard-l.png";
 interface GridProps {
   gridSize: number;
   characterPosition: { x: number; y: number };
-  characterDirection: string;
 }
 
 const TOTAL_GRID_DIMENSION = 600; // Total size of the grid in pixels
@@ -15,7 +14,6 @@ const TOTAL_GRID_DIMENSION = 600; // Total size of the grid in pixels
 const GridComponent: React.FC<GridProps> = ({
   gridSize,
   characterPosition,
-  characterDirection,
 }) => {
   const tileSize = TOTAL_GRID_DIMENSION / gridSize;
 
@@ -39,9 +37,7 @@ const GridComponent: React.FC<GridProps> = ({
               alignItems: "center",
             }}
           >
-            {isCharacterHere ? (
-              <Character direction={characterDirection} />
-            ) : null}
+            {isCharacterHere ? <Character /> : null}
           </div>,
         );
       }
@@ -64,24 +60,9 @@ const GridComponent: React.FC<GridProps> = ({
   );
 };
 
-const Character = ({ direction }: { direction: string }) => {
-  const getRotation = () => {
-    switch (direction) {
-      case "north":
-        return "0deg";
-      case "east":
-        return "90deg";
-      case "south":
-        return "180deg";
-      case "west":
-        return "270deg";
-      default:
-        return "0deg";
-    }
-  };
-
+const Character = () => {
   return (
-    <div style={{ transform: `rotate(${getRotation()})` }}>
+    <div>
       <Image src={Wizard} alt="Wizard" />{" "}
     </div>
   );

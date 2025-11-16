@@ -33,30 +33,39 @@ const customBlocks = [
     helpUrl: "",
   },
   {
-    type: "move_forward",
-    message0: "move forward",
+    type: "move_up",
+    message0: "move up",
     previousStatement: null,
     nextStatement: null,
     colour: 230,
-    tooltip: "Moves the character one step forward.",
+    tooltip: "Moves the character one step up.",
     helpUrl: "",
   },
   {
-    type: "turn_left",
-    message0: "turn left",
+    type: "move_down",
+    message0: "move down",
     previousStatement: null,
     nextStatement: null,
     colour: 230,
-    tooltip: "Turns the character 90 degrees to the left.",
+    tooltip: "Moves the character one step down.",
     helpUrl: "",
   },
   {
-    type: "turn_right",
-    message0: "turn right",
+    type: "move_left",
+    message0: "move left",
     previousStatement: null,
     nextStatement: null,
     colour: 230,
-    tooltip: "Turns the character 90 degrees to the right.",
+    tooltip: "Moves the character one step left.",
+    helpUrl: "",
+  },
+  {
+    type: "move_right",
+    message0: "move right",
+    previousStatement: null,
+    nextStatement: null,
+    colour: 230,
+    tooltip: "Moves the character one step right.",
     helpUrl: "",
   },
   {
@@ -179,6 +188,29 @@ const customBlocks = [
     colour: 210,
     helpUrl: "",
   },
+  {
+    type: "simple_if",
+    message0: "if %1 then",
+    args0: [
+      {
+        type: "input_value",
+        name: "CONDITION",
+        check: "Boolean",
+      },
+    ],
+    message1: "%1",
+    args1: [
+      {
+        type: "input_statement",
+        name: "DO",
+      },
+    ],
+    previousStatement: null,
+    nextStatement: null,
+    colour: 210,
+    tooltip: "If the condition is true, then do the statements.",
+    helpUrl: "",
+  },
 ];
 
 // Define code generation for custom blocks
@@ -186,17 +218,36 @@ javascriptGenerator.forBlock["start_block"] = function (block) {
   return ""; // No code for the start block itself
 };
 
-javascriptGenerator.forBlock["move_forward"] = function (block) {
-  return "window.api.moveForward();\n";
+javascriptGenerator.forBlock["move_up"] = function (block) {
+  return "yield window.api.moveUp();\n";
 };
 
-javascriptGenerator.forBlock["turn_left"] = function (block) {
-  return "window.api.turnLeft();\n";
+javascriptGenerator.forBlock["move_down"] = function (block) {
+  return "yield window.api.moveDown();\n";
 };
 
-javascriptGenerator.forBlock["turn_right"] = function (block) {
-  return "window.api.turnRight();\n";
+javascriptGenerator.forBlock["move_left"] = function (block) {
+  return "yield window.api.moveLeft();\n";
 };
+
+javascriptGenerator.forBlock["move_right"] = function (block) {
+  return "yield window.api.moveRight();\n";
+};
+
+
+
+javascriptGenerator.forBlock["simple_if"] = function (block) {
+  const condition =
+    javascriptGenerator.valueToCode(
+      block,
+      "CONDITION",
+      javascriptGenerator.ORDER_ATOMIC,
+    ) || "false";
+  const branch = javascriptGenerator.statementToCode(block, "DO");
+  const code = `if (${condition}) {\n${branch}}\n`;
+  return code;
+};
+
 
 const BlocklyComponent = () => {
   const blocklyDiv = useRef<HTMLDivElement>(null);
@@ -259,9 +310,24 @@ const BlocklyComponent = () => {
               name: "Custom",
               contents: [
                 { kind: "block", type: "start_block" },
-                { kind: "block", type: "move_forward" },
-                { kind: "block", type: "turn_left" },
-                { kind: "block", type: "turn_right" },
+                { kind: "block", type: "move_up" },
+                { kind: "block", type: "move_down" },
+                { kind: "block", type: "move_left" },
+                { kind: "block", type: "move_right" },
+              ],
+            },
+            {
+              kind: "sep",
+            },
+            {
+              kind: "category",
+              name: "Logic",
+              contents: [
+                { kind: "block", type: "simple_if" },
+                { kind: "block", type: "logic_compare" },
+                { kind: "block", type: "logic_operation" },
+                { kind: "block", type: "logic_negate" },
+                { kind: "block", type: "logic_boolean" },
               ],
             },
             {
@@ -271,12 +337,22 @@ const BlocklyComponent = () => {
             },
             {
               kind: "category",
-              name: "Logic",
+              name: "Text",
               contents: [
-                { kind: "block", type: "logic_compare" },
-                { kind: "block", type: "logic_operation" },
-                { kind: "block", type: "logic_negate" },
-                { kind: "block", type: "logic_boolean" },
+                {
+                  kind: "block",
+                  type: "text",
+                },
+              ],
+            },
+            {
+              kind: "category",
+              name: "Math",
+              contents: [
+                {
+                  kind: "block",
+                  type: "math_number",
+                },
               ],
             },
           ],
