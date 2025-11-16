@@ -19,7 +19,7 @@ export default function SettingsPage() {
             { text: "loops", href: "/course/loops" },
             { text: "logic", href: "/course/logic" },
             { text: "sorting", href: "/course/sorting" },
-            { text: "custom", href: "/course/custom" }
+            { text: "movement", href: "/course/movement" }
           ]}
         />
         <SidebarItem 
