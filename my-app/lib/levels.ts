@@ -26,9 +26,7 @@ export const chapters: { [key: string]: Chapter } = {
           { x: 6, y: 1 },
         ],
         rewardPosition: { x: 3, y: 3 },
-        startPosition: { x: 0, y: 0 },
-        stackPosition: { x: 7, y: 0 }, // Example stack
-        initialStackHeight: 4,
+        startPosition: { x: 0, y: 0 }
       },
       {
         gridSize: 8,
