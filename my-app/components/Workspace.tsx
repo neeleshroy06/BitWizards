@@ -6,46 +6,57 @@ import { toast } from "sonner";
 import { LevelConfig } from "@/lib/levels";
 
 interface WorkspaceProps {
-  levelConfig: LevelConfig;
-  onLevelComplete: () => void;
+  levelConfig?: LevelConfig;
+  onLevelComplete?: () => void;
 }
 
+const defaultPlaygroundLevel: LevelConfig = {
+  gridSize: 8,
+  obstacles: [],
+  rewardPosition: { x: 7, y: 7 },
+  startPosition: { x: 0, y: 0 },
+};
+
 export default function Workspace({ levelConfig, onLevelComplete }: WorkspaceProps) {
+  const currentLevel = levelConfig || defaultPlaygroundLevel;
+
   const [characterPosition, setCharacterPosition] = useState(
-    levelConfig.startPosition,
+    currentLevel.startPosition,
   );
   const hasWonRef = useRef(false);
 
   useEffect(() => {
-    setCharacterPosition(levelConfig.startPosition);
+    setCharacterPosition(currentLevel.startPosition);
     hasWonRef.current = false;
-  }, [levelConfig]);
+  }, [currentLevel]);
 
   const isObstacle = useCallback(
     (x: number, y: number) => {
-      return levelConfig.obstacles.some(
+      return currentLevel.obstacles.some(
         (obstacle) => obstacle.x === x && obstacle.y === y,
       );
     },
-    [levelConfig.obstacles],
+    [currentLevel.obstacles],
   );
 
   const handleWin = useCallback(() => {
     if (!hasWonRef.current) {
       toast.success("You reached the goal!");
       hasWonRef.current = true;
-      onLevelComplete(); // Call the prop function to advance level/chapter
+      if (onLevelComplete) {
+        onLevelComplete(); // Call the prop function to advance level/chapter
+      }
     }
   }, [onLevelComplete]);
 
   useEffect(() => {
     if (
-      characterPosition.x === levelConfig.rewardPosition.x &&
-      characterPosition.y === levelConfig.rewardPosition.y
+      characterPosition.x === currentLevel.rewardPosition.x &&
+      characterPosition.y === currentLevel.rewardPosition.y
     ) {
       handleWin();
     }
-  }, [characterPosition, levelConfig.rewardPosition, handleWin]);
+  }, [characterPosition, currentLevel.rewardPosition, handleWin]);
 
   const move = useCallback(
     (dx: number, dy: number) => {
@@ -56,9 +67,9 @@ export default function Workspace({ levelConfig, onLevelComplete }: WorkspacePro
 
           if (
             newX < 0 ||
-            newX >= levelConfig.gridSize ||
+            newX >= currentLevel.gridSize ||
             newY < 0 ||
-            newY >= levelConfig.gridSize ||
+            newY >= currentLevel.gridSize ||
             isObstacle(newX, newY)
           ) {
             // Invalid move, don't change position
@@ -70,7 +81,7 @@ export default function Workspace({ levelConfig, onLevelComplete }: WorkspacePro
         setTimeout(resolve, 200);
       });
     },
-    [levelConfig.gridSize, isObstacle],
+    [currentLevel.gridSize, isObstacle],
   );
 
   const moveUp = useCallback(() => move(0, -1), [move]);
@@ -148,10 +159,10 @@ export default function Workspace({ levelConfig, onLevelComplete }: WorkspacePro
       </div>
       <div style={{ flex: 1, paddingLeft: "20px" }}>
         <GridComponent
-          gridSize={levelConfig.gridSize}
+          gridSize={currentLevel.gridSize}
           characterPosition={characterPosition}
-          obstacles={levelConfig.obstacles}
-          rewardPosition={levelConfig.rewardPosition}
+          obstacles={currentLevel.obstacles}
+          rewardPosition={currentLevel.rewardPosition}
         />
       </div>
     </div>

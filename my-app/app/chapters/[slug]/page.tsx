@@ -10,21 +10,22 @@ export default function Page() {
   const { slug } = useParams<{ slug: string }>();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const initialLevel = parseInt(searchParams.get("level") || "0");
+  const initialLevelIndex = parseInt(searchParams.get("level") || "0");
+
+  const chapter = chapters[slug];
+  const initialLevelConfig = chapter?.levels[initialLevelIndex] || null;
 
   const [title, setTitle] = useState("");
   const [descr, setDescr] = useState("");
-  const [currentLevelIndex, setCurrentLevelIndex] = useState(initialLevel);
-  const [currentLevelConfig, setCurrentLevelConfig] = useState<LevelConfig | null>(null);
-
-  const chapter = chapters[slug];
+  const [currentLevelIndex, setCurrentLevelIndex] = useState(initialLevelIndex);
+  const [currentLevelConfig, setCurrentLevelConfig] = useState<LevelConfig | null>(initialLevelConfig);
 
   useEffect(() => {
     if (chapter) {
       setTitle(chapter.name);
-      // You might want to add a description for each level or chapter
       setDescr(`Level ${currentLevelIndex + 1} of ${chapter.name}`);
 
+      // Update currentLevelConfig if chapter or level index changes
       if (chapter.levels[currentLevelIndex]) {
         setCurrentLevelConfig(chapter.levels[currentLevelIndex]);
       } else {
