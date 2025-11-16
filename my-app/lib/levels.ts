@@ -3,6 +3,8 @@ export interface LevelConfig {
   obstacles: { x: number; y: number }[];
   rewardPosition: { x: number; y: number };
   startPosition: { x: number; y: number };
+  stackPosition?: { x: number; y: number }; // Optional stack position
+  initialStackHeight?: number; // Optional initial stack height (1-4)
 }
 
 export interface Chapter {
@@ -25,6 +27,8 @@ export const chapters: { [key: string]: Chapter } = {
         ],
         rewardPosition: { x: 3, y: 3 },
         startPosition: { x: 0, y: 0 },
+        stackPosition: { x: 7, y: 0 }, // Example stack
+        initialStackHeight: 4,
       },
       {
         gridSize: 8,

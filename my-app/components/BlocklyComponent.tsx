@@ -211,6 +211,27 @@ const customBlocks = [
     tooltip: "If the condition is true, then do the statements.",
     helpUrl: "",
   },
+  {
+    type: "pop_stack",
+    message0: "pop stack %1",
+    args0: [
+      {
+        type: "field_dropdown",
+        name: "DIRECTION",
+        options: [
+          ["up", "up"],
+          ["down", "down"],
+          ["left", "left"],
+          ["right", "right"],
+        ],
+      },
+    ],
+    previousStatement: null,
+    nextStatement: null,
+    colour: 160, // A new color for structure blocks
+    tooltip: "Pops an item from the stack in the specified direction.",
+    helpUrl: "",
+  },
 ];
 
 // Define code generation for custom blocks
@@ -232,6 +253,11 @@ javascriptGenerator.forBlock["move_left"] = function (block) {
 
 javascriptGenerator.forBlock["move_right"] = function (block) {
   return "yield window.api.moveRight();\n";
+};
+
+javascriptGenerator.forBlock["pop_stack"] = function (block) {
+  const direction = block.getFieldValue("DIRECTION");
+  return `yield window.api.popStack('${direction}');\n`;
 };
 
 
@@ -342,6 +368,11 @@ const BlocklyComponent = () => {
                 { kind: "block", type: "logic_negate" },
                 { kind: "block", type: "logic_boolean" },
               ],
+            },
+            {
+              kind: "category",
+              name: "Structure", // New category
+              contents: [{ kind: "block", type: "pop_stack" }],
             },
             {
               kind: "category",

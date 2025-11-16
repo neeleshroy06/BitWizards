@@ -11,6 +11,8 @@ interface GridProps {
   characterPosition: { x: number; y: number };
   obstacles: { x: number; y: number }[];
   rewardPosition: { x: number; y: number };
+  stackPosition?: { x: number; y: number };
+  stackHeight?: number;
 }
 
 const TOTAL_GRID_DIMENSION = 570; // Total size of the grid in pixels
@@ -20,6 +22,8 @@ const GridComponent: React.FC<GridProps> = ({
   characterPosition,
   obstacles,
   rewardPosition,
+  stackPosition,
+  stackHeight,
 }) => {
   const tileSize = TOTAL_GRID_DIMENSION / gridSize;
 
@@ -31,6 +35,10 @@ const GridComponent: React.FC<GridProps> = ({
     return rewardPosition.x === x && rewardPosition.y === y;
   };
 
+  const isStack = (x: number, y: number) => {
+    return stackPosition && stackPosition.x === x && stackPosition.y === y && stackHeight && stackHeight > 0;
+  };
+
   const renderGrid = () => {
     const cells = [];
     for (let y = 0; y < gridSize; y++) {
@@ -39,7 +47,10 @@ const GridComponent: React.FC<GridProps> = ({
           characterPosition.x === x && characterPosition.y === y;
 
         let cellContent = null;
-        if (isCharacterHere) {
+
+        if (isStack(x, y)) {
+          cellContent = <Stack height={stackHeight!} />;
+        } else if (isCharacterHere) {
           cellContent = <Character />;
         } else if (isReward(x, y)) {
           cellContent = <Reward />;
@@ -103,6 +114,18 @@ const Obstacle = () => {
   return (
     <div>
       <Image src={ObstacleImg} alt="Obstacle" />
+    </div>
+  );
+};
+
+interface StackProps {
+  height: number;
+}
+
+const Stack: React.FC<StackProps> = ({ height }) => {
+  return (
+    <div>
+      <Image src={`/assets/${height}.png`} alt={`Stack height ${height}`} width={50} height={50} />
     </div>
   );
 };
