@@ -2,50 +2,67 @@ import React, { useState, useEffect, useCallback } from "react";
 import { javascriptGenerator } from "blockly/javascript";
 import BlocklyComponent from "@/components/BlocklyComponent";
 import GridComponent from "@/components/GridComponent";
+import { toast } from "sonner";
+
+const gridSize = 8;
+const level = {
+  obstacles: [
+    { x: 1, y: 1 },
+    { x: 2, y: 3 },
+    { x: 4, y: 2 },
+    { x: 5, y: 5 },
+    { x: 6, y: 1 },
+  ],
+  rewardPosition: { x: 3, y: 3 },
+};
+
+const isObstacle = (x: number, y: number) => {
+  return level.obstacles.some(
+    (obstacle) => obstacle.x === x && obstacle.y === y,
+  );
+};
 
 export default function Workspace() {
-  const gridSize = 8;
   const [characterPosition, setCharacterPosition] = useState({ x: 0, y: 0 });
 
-  const moveUp = useCallback(() => {
+  const handleWin = () => {
+    toast.success("You reached the goal!");
+  };
+
+  const move = useCallback((dx: number, dy: number) => {
     return new Promise<void>((resolve) => {
-      setCharacterPosition((prev) => ({
-        ...prev,
-        y: Math.max(0, prev.y - 1),
-      }));
+      setCharacterPosition((prev) => {
+        const newX = prev.x + dx;
+        const newY = prev.y + dy;
+
+        if (
+          newX < 0 ||
+          newX >= gridSize ||
+          newY < 0 ||
+          newY >= gridSize ||
+          isObstacle(newX, newY)
+        ) {
+          // Invalid move, don't change position
+          return prev;
+        }
+
+        if (
+          newX === level.rewardPosition.x &&
+          newY === level.rewardPosition.y
+        ) {
+          handleWin();
+        }
+
+        return { x: newX, y: newY };
+      });
       setTimeout(resolve, 200);
     });
   }, []);
 
-  const moveDown = useCallback(() => {
-    return new Promise<void>((resolve) => {
-      setCharacterPosition((prev) => ({
-        ...prev,
-        y: Math.min(gridSize - 1, prev.y + 1),
-      }));
-      setTimeout(resolve, 200);
-    });
-  }, []);
-
-  const moveLeft = useCallback(() => {
-    return new Promise<void>((resolve) => {
-      setCharacterPosition((prev) => ({
-        ...prev,
-        x: Math.max(0, prev.x - 1),
-      }));
-      setTimeout(resolve, 200);
-    });
-  }, []);
-
-  const moveRight = useCallback(() => {
-    return new Promise<void>((resolve) => {
-      setCharacterPosition((prev) => ({
-        ...prev,
-        x: Math.min(gridSize - 1, prev.x + 1),
-      }));
-      setTimeout(resolve, 200);
-    });
-  }, []);
+  const moveUp = useCallback(() => move(0, -1), [move]);
+  const moveDown = useCallback(() => move(0, 1), [move]);
+  const moveLeft = useCallback(() => move(-1, 0), [move]);
+  const moveRight = useCallback(() => move(1, 0), [move]);
 
   useEffect(() => {
     (window as any).api = {
@@ -63,7 +80,9 @@ export default function Workspace() {
     const code = javascriptGenerator.workspaceToCode((window as any).workspace);
 
     try {
-      const GeneratorFunction = Object.getPrototypeOf(function* () {}).constructor;
+      const GeneratorFunction = Object.getPrototypeOf(
+        function* () {},
+      ).constructor;
       const generator = new GeneratorFunction(code)();
 
       const runGenerator = (gen: Generator) => {
@@ -114,6 +133,8 @@ export default function Workspace() {
         <GridComponent
           gridSize={gridSize}
           characterPosition={characterPosition}
+          obstacles={level.obstacles}
+          rewardPosition={level.rewardPosition}
         />
       </div>
     </div>
