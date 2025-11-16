@@ -16,7 +16,7 @@ export default function Page() {
     switch (slug) {
       case "arithmetic":
         setTitle("Introduction to Arithmetic");
-        setDescr("Learn how to use loops to repeat actions in your code.");
+        setDescr("Learn how to move around the world.");
         break;
       case "conditionals":
         setTitle("Introduction to Conditionals");
@@ -24,11 +24,11 @@ export default function Page() {
         break;
       case "loops":
         setTitle("Introduction to Loops");
-        setDescr("Discover different algorithms to sort data efficiently.");
+        setDescr("Understand how to repeat actions using loops.");
         break;
       case "sorts":
         setTitle("Introduction to Sorts");
-        setDescr("Create your own learning path with custom modules.");
+        setDescr("Discover different algorithms to sort data efficiently.");
         break;
     }
   }, [slug]);
@@ -39,8 +39,9 @@ export default function Page() {
       </div>
       <div className="flex-1  flex flex-col">
         <Workspace />
-        <div className="p-7 border-t">
-          <p>Welcome traveler!</p>
+        <div className="p-4 border-t">
+          <h1 className="font-bold">{title}</h1>
+          <p>Welcome traveler! {descr}</p>
         </div>
       </div>
     </div>
