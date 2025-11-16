@@ -45,32 +45,37 @@ export const chapters: { [key: string]: Chapter } = {
     name: "Conditionals",
     levels: [
       {
-        gridSize: 8,
+        gridSize: 4,
         obstacles: [
           { x: 1, y: 2 },
-          { x: 2, y: 4 },
+          { x: 2, y: 0 },
+          { x: 3, y: 0 },
           { x: 3, y: 1 },
-          { x: 5, y: 6 },
-          { x: 7, y: 3 },
+          { x: 2, y: 3 },
+          { x: 0, y: 1 },
+          { x: 0, y: 2 },
+          { x: 0, y: 3 },
+          { x: 1, y: 3 },
+
         ],
-        rewardPosition: { x: 6, y: 5 },
-        startPosition: { x: 0, y: 7 },
+        rewardPosition: { x: 3, y: 3 },
+        startPosition: { x: 0, y: 0 },
       },
       {
-        gridSize: 8,
+        gridSize: 6,
         obstacles: [
           { x: 1, y: 0 },
           { x: 2, y: 2 },
           { x: 4, y: 1 },
-          { x: 6, y: 3 },
+          { x: 3, y: 3 },
         ],
         rewardPosition: { x: 0, y: 0 },
-        startPosition: { x: 7, y: 7 },
+        startPosition: { x: 5, y: 5 },
       },
     ],
   },
   loops: {
-    name: "Loops",
+    name: "Data Structures",
     levels: [
       {
         gridSize: 8,
@@ -94,34 +99,6 @@ export const chapters: { [key: string]: Chapter } = {
         ],
         rewardPosition: { x: 5, y: 5 },
         startPosition: { x: 0, y: 7 },
-      },
-    ],
-  },
-  sorts: {
-    name: "Sorts",
-    levels: [
-      {
-        gridSize: 8,
-        obstacles: [
-          { x: 1, y: 1 },
-          { x: 2, y: 3 },
-          { x: 3, y: 5 },
-          { x: 4, y: 0 },
-          { x: 5, y: 2 },
-        ],
-        rewardPosition: { x: 7, y: 7 },
-        startPosition: { x: 0, y: 0 },
-      },
-      {
-        gridSize: 8,
-        obstacles: [
-          { x: 7, y: 1 },
-          { x: 6, y: 3 },
-          { x: 5, y: 5 },
-          { x: 4, y: 7 },
-        ],
-        rewardPosition: { x: 0, y: 0 },
-        startPosition: { x: 7, y: 7 },
       },
     ],
   },

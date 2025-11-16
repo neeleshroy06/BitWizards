@@ -403,7 +403,7 @@ const BlocklyComponent = () => {
             },
             {
               kind: "category",
-              name: "Loops",
+              name: "Data Structures",
               contents: [{ kind: "block", type: "controls_whileUntil" }],
             },
             {
