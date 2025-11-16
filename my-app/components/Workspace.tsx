@@ -6,78 +6,77 @@ import GridComponent from "@/components/GridComponent";
 export default function Workspace() {
   const gridSize = 8;
   const [characterPosition, setCharacterPosition] = useState({ x: 0, y: 0 });
-  const [characterDirection, setCharacterDirection] = useState("north");
 
-  const moveForward = useCallback(() => {
-    setCharacterPosition((prev) => {
-      let { x, y } = prev;
-      switch (characterDirection) {
-        case "north":
-          y = Math.max(0, y - 1);
-          break;
-        case "south":
-          y = Math.min(gridSize - 1, y + 1);
-          break;
-        case "east":
-          x = Math.min(gridSize - 1, x + 1);
-          break;
-        case "west":
-          x = Math.max(0, x - 1);
-          break;
-      }
-      return { x, y };
-    });
-  }, [characterDirection]);
-
-  const turnLeft = useCallback(() => {
-    setCharacterDirection((prev) => {
-      switch (prev) {
-        case "north":
-          return "west";
-        case "west":
-          return "south";
-        case "south":
-          return "east";
-        case "east":
-          return "north";
-        default:
-          return prev;
-      }
+  const moveUp = useCallback(() => {
+    return new Promise<void>((resolve) => {
+      setCharacterPosition((prev) => ({
+        ...prev,
+        y: Math.max(0, prev.y - 1),
+      }));
+      setTimeout(resolve, 200);
     });
   }, []);
 
-  const turnRight = useCallback(() => {
-    setCharacterDirection((prev) => {
-      switch (prev) {
-        case "north":
-          return "east";
-        case "east":
-          return "south";
-        case "south":
-          return "west";
-        case "west":
-          return "north";
-        default:
-          return prev;
-      }
+  const moveDown = useCallback(() => {
+    return new Promise<void>((resolve) => {
+      setCharacterPosition((prev) => ({
+        ...prev,
+        y: Math.min(gridSize - 1, prev.y + 1),
+      }));
+      setTimeout(resolve, 200);
+    });
+  }, []);
+
+  const moveLeft = useCallback(() => {
+    return new Promise<void>((resolve) => {
+      setCharacterPosition((prev) => ({
+        ...prev,
+        x: Math.max(0, prev.x - 1),
+      }));
+      setTimeout(resolve, 200);
+    });
+  }, []);
+
+  const moveRight = useCallback(() => {
+    return new Promise<void>((resolve) => {
+      setCharacterPosition((prev) => ({
+        ...prev,
+        x: Math.min(gridSize - 1, prev.x + 1),
+      }));
+      setTimeout(resolve, 200);
     });
   }, []);
 
   useEffect(() => {
     (window as any).api = {
-      moveForward,
-      turnLeft,
-      turnRight,
+      moveUp,
+      moveDown,
+      moveLeft,
+      moveRight,
     };
-  }, [moveForward, turnLeft, turnRight]);
+  }, [moveUp, moveDown, moveLeft, moveRight]);
 
   const runCode = () => {
     if (typeof window !== "undefined" && (window as any).loopTrap) {
       (window as any).loopTrap.iterations = 1000;
     }
     const code = javascriptGenerator.workspaceToCode((window as any).workspace);
+
     try {
-      eval(code);
+      const GeneratorFunction = Object.getPrototypeOf(function* () {}).constructor;
+      const generator = new GeneratorFunction(code)();
+
+      const runGenerator = (gen: Generator) => {
+        const { value, done } = gen.next();
+        if (done) {
+          return;
+        }
+        Promise.resolve(value).then(() => {
+          runGenerator(gen);
+        });
+      };
+
+      runGenerator(generator);
     } catch (e) {
       console.error(e);
     }
@@ -115,7 +114,6 @@ export default function Workspace() {
         <GridComponent
           gridSize={gridSize}
           characterPosition={characterPosition}
-          characterDirection={characterDirection}
         />
       </div>
     </div>
