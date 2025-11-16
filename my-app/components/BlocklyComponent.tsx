@@ -262,9 +262,17 @@ const BlocklyComponent = () => {
     const style = document.createElement("style");
     style.innerHTML = `
       .blocklyTreeLabel {
-        font-family: 'Helvetica', 'Arial', sans-serif;
-        font-weight: bold;
+        font-family: 'Roboto', sans-serif;
+        font-weight: bold; /* Reverted to bold as per initial request */
         font-size: 1.1rem;
+        padding: 4px 8px; /* Initial padding for spacing */
+      }
+      /* Reduce space for separators */
+      .blocklyTreeSeparator {
+        height: 1px !important; /* Make separator very thin */
+        margin: 0 !important; /* Remove all margins */
+        border: none !important; /* Remove any default border */
+        background-color: transparent !important; /* Make it invisible */
       }
       /* Hide the default scrollbar */
       .blocklyToolboxDiv::-webkit-scrollbar {
@@ -295,6 +303,11 @@ const BlocklyComponent = () => {
       e.stopPropagation(); // Prevent workspace listener from firing
       if (toolboxDiv) {
         toolboxDiv.scrollTop += e.deltaY;
+        // Prevent scrolling past the top or bottom
+        if (toolboxDiv.scrollTop < 0) toolboxDiv.scrollTop = 0;
+        if (toolboxDiv.scrollTop > toolboxDiv.scrollHeight - toolboxDiv.clientHeight) {
+          toolboxDiv.scrollTop = toolboxDiv.scrollHeight - toolboxDiv.clientHeight;
+        }
       }
     };
 
@@ -307,7 +320,7 @@ const BlocklyComponent = () => {
           contents: [
             {
               kind: "category",
-              name: "Custom",
+              name: "Movement",
               contents: [
                 { kind: "block", type: "start_block" },
                 { kind: "block", type: "move_up" },
