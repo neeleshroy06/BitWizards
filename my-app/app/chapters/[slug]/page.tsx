@@ -18,7 +18,8 @@ export default function Page() {
   const [title, setTitle] = useState("");
   const [descr, setDescr] = useState("");
   const [currentLevelIndex, setCurrentLevelIndex] = useState(initialLevelIndex);
-  const [currentLevelConfig, setCurrentLevelConfig] = useState<LevelConfig | null>(initialLevelConfig);
+  const [currentLevelConfig, setCurrentLevelConfig] =
+    useState<LevelConfig | null>(initialLevelConfig);
 
   useEffect(() => {
     if (chapter) {
@@ -75,10 +76,13 @@ export default function Page() {
         <SidebarGlobal />
       </div>
       <div className="flex-1  flex flex-col">
-        <Workspace levelConfig={currentLevelConfig} onLevelComplete={handleLevelComplete} />
+        <Workspace
+          levelConfig={currentLevelConfig}
+          onLevelComplete={handleLevelComplete}
+        />
         <div className="p-4 border-t">
           <h1 className="font-bold">{title}</h1>
-          <p>Welcome traveler! {descr}</p>
+          <p>Welcome traveler! {descr}.</p>
         </div>
       </div>
     </div>
