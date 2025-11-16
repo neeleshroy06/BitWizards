@@ -34,8 +34,15 @@ export default function Page() {
   }, [slug]);
   return (
     <div className="flex h-screen w-screen overflow-hidden">
-      <SidebarGlobal />
-      <Workspace />
+      <div>
+        <SidebarGlobal />
+      </div>
+      <div className="flex-1 flex flex-col">
+        <Workspace />
+        <div className="border-t">
+          <p>Welcome traveler!</p>
+        </div>
+      </div>
     </div>
   );
 }
